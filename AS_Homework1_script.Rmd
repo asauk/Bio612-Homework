@@ -1,0 +1,133 @@
+---
+title: "Homework1_AS"
+author: "Alexandra Sauk"
+date: '2020-01-15'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Part 1
+##Question 1
+Vectors for each strain of potato.
+```{r}
+T.strain.A=c(0.17,0.20,0.13,0.20,0.24,0.25,0.15,0.21,0.21)
+T.strain.B=c(0.47,0.21,0.34,0.32,0.33,0.29,0.18,0.20,0.25)
+Common.strain=c(0.44,0.33,0.37,0.33,0.31,0.27,0.22,0.30,0.28)
+```
+
+##Question 2
+The difference between the means of the two transgenic strains is 0.09 μmoles/g.
+```{r}
+delta.meansq2=((mean(T.strain.B))-(mean(T.strain.A)))
+delta.meansq2
+```
+
+##Question 3
+The difference between the means of the common strain and transgenic strain A is 0.12  μmoles/g.
+```{r}
+delta.meansq3=((mean(Common.strain))-(mean(T.strain.A)))
+delta.meansq3
+```
+
+##Question 4
+```{r}
+par(mar=c(8.5,6.5,4.1,2.1), mgp=c(3,1,0))
+hist(Common.strain, main = NULL, xlab="Hydrogen peroxide concentration (μmoles/g)", ylab = "Observed Frequency")
+title(sub = "Fig. 1: Histogram of hydrogen peroxide concentration 
+     in the common strain of potato", line=6, cex.sub=1.2)
+```
+
+##Question 5
+```{r}
+Peroxide=c(0.27,0.21,0.34,0.32,0.24,0.29,0.18,0.20,0.29)
+Growth.rate=c(1.79,1.01,1.71,1.89,1.41,1.15,1.13,1.20,1.10)
+
+mydata=data.frame('Peroxide'=Peroxide, 'Growth.rate'=Growth.rate)
+mydata
+```
+
+##Question 6
+```{r}
+library("ggplot2")
+par(mar=c(5.5,6.5,4.1,2.1))
+ggplot(mydata, aes(mydata$Growth.rate, mydata$Peroxide)) + geom_point(col="medium blue") + labs(y="Hydrogen peroxide concentration (μmoles/g)", x="Fungal growth rate (cm/day)", title = NULL, caption = "Fig. 2: Fungal growth rate on a common strain of potato") + theme(plot.caption = element_text(hjust = 0.5, size = 14))
+```
+
+
+##Question 7
+
+The growth rate of the fungus appears to increase with increasing hydrogen peroxide concentration in the leaves of the potato plant. Thus, these results do not support the null hypothesis that hydrogen peroxide inhibits fungal growth. Although, the hypothesis is not supported, there are two replicates that show low fungal growth at high hydrogen peroxide concentrations and more replicates are needed to either rule out these data points as outliers if the trend holds, or to re-evaluate the evidence in regards to the hypothesis.  
+
+#Part 2
+##Question 8
+```{r}
+turtle.data=read.csv("Homework1_turtles_AS.csv")
+turtle.data
+
+```
+
+##Question 9
+```{r}
+turtle.table=table(turtle.data$Nesting.status,turtle.data$Species)
+turtle.table
+```
+
+##Question 10
+```{r}
+par(mar=c(7.5,6.5,3.1,2.1))
+turtle.plot=barplot(turtle.table, beside = TRUE, xlab = "Turtle species", ylab = "Number of nesting attempts", col = c("red","sea green"))
+legend("topleft", legend=c("Aborted", "Success"), fill = c("red","sea green"))
+title(sub="Fig. 3: Marine turtle nesting attempts in one month", cex.sub=1.2, line=5)
+```
+
+##Question 11
+
+The mean number of successful nesting attempts by all marine turtles was 8 turtles and the standard deviation is 6.9. 
+```{r}
+Successful=c(4,4,16)
+Aborted=c(3,2,4)
+mean=mean(Successful)
+sd=sd(Successful)
+mean
+sd
+
+```
+
+##Question 12
+
+The proportion of failed nesting attempts is 0.43 for Hawksbills, 0.33 for Leatherbacks, and 0.20 for Olive Ridleys. Based on these results Hawksbills are in need for the greatest conservation effort to ensure successful nesting.*
+
+*While ensuring successful nesting and that hatchling turtles make it to the water safely is important conservation practice, protections for breeding age individuals have been more effective in growing marine turtle population sizes. 
+```{r}
+proportion.aborted=Aborted/(Aborted+Successful)
+proportion.aborted
+Species=c("Hawksbill", "Leatherback", "Olive Ridley")
+data.frame(Species, proportion.aborted)
+
+```
+
+#Question 13
+
+```{r}
+egg.data=read.csv("Homework1_turtle_eggs_AS.csv")
+egg.data
+```
+
+#Question 14
+
+```{r}
+par(mar=c(7.5,6.5,3.1,4.1))
+boxplot(egg.data$Olive.Ridley, egg.data$Hawksbill, egg.data$Leatherback, names = c("Olive Ridley","Hawksbill", "Leatherback"), xlab = "Turtle species", ylab = "Number of eggs", col=c("#238E68","#45C3B8","#63D1F4"))
+title(sub="Fig. 4: Number of eggs layed by marine turtles across 16 monitored nests", cex.sub=1.2, line=5)
+```
+
+##Question 15
+```{r}
+par(mar=c(7.5,6.5,3.1,4.1))
+ggplot(egg.data, aes(y=egg.data$Leatherback, x=egg.data$Hawksbill)) + geom_point(col=("#45C3B8")) + labs(y="Number of Leatherback eggs", x="Number of Hawksbill eggs ", title = NULL, caption = "Fig. 5: Number of Leatherback eggs vs Hawksbill eggs \n layed across all beach sections") + theme(plot.caption = element_text(hjust = 0.5, size = 14))
+```
+
+
